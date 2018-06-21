@@ -2,7 +2,7 @@
 
 const expect = require('chai').expect;
 
-const config = require('../../../config/config');
+// const config = require('../../../config/config');
 
 describe('config', () => {
   it('should load', () => {
