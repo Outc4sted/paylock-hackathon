@@ -48,12 +48,6 @@ export default class Main extends React.Component {
         // self.state.activeMarker = self.state.hits[0]
         // self.state.hits.shift();
     });
-
-    });
-    // fetch('http://localhost:3001/hits').then(res => {
-    //   console.log("res", res);
-    //   self.state.hits = res
-    // });
   }
 
   handleMarkerClick(marker) {
@@ -85,10 +79,11 @@ export default class Main extends React.Component {
   }
 
   render() {
+    console.log("this.state", this.state);
     const markers = this.state.hits.map((marker, idx) => (
       <Marker key={idx} position={{ lat: marker.Latitude, lng: marker.Longitude }} onClick={e => this.handleMarkerClick(marker)}> </Marker>
     ));
-    console.log("markers", markers);
+      console.log("markers", markers);
 
     return (
       <div>
