@@ -47,6 +47,7 @@ export default class Main extends React.Component {
         // self.state.hits = records;
         // self.state.activeMarker = self.state.hits[0]
         // self.state.hits.shift();
+      });
     });
   }
 
