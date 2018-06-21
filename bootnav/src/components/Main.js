@@ -1,6 +1,7 @@
 import React from "react";
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import ButtonContainer from './ButtonContainer';
 
 const MyMapComponent = compose(
   withProps({
@@ -23,9 +24,14 @@ export default class Main extends React.Component {
     this.state = {
       hits: [],
       zoneCenterPoint: {},
-      defaultZoomLevel: 8
+      defaultZoomLevel: 8,
+      existingCars: [],
+      activeMarker: {}
     };
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this._onTapCarBtn = this._onTapCarBtn.bind(this);
+    this._onTapNoCarBtn = this._onTapNoCarBtn.bind(this);
+
   }
 
   componentDidMount() {
@@ -47,6 +53,15 @@ export default class Main extends React.Component {
     alert(JSON.stringify(marker));
   }
 
+  _onTapCarBtn() {
+    this.setState({ existingCars: this.state.existingCars.push(this.state.activeMarker) })
+  }
+
+  _onTapNoCarBtn() {
+    console.log(this.state.activeMarker, 'is not a hit')
+    //do nothing...
+  }
+
   render() {
     const markers = this.state.hits.map((marker, idx) => (
       <Marker key={idx} position={{ lat: marker.Latitude, lng: marker.Longitude }} onClick={e => this.handleMarkerClick(marker)}> </Marker>
@@ -54,7 +69,10 @@ export default class Main extends React.Component {
     console.log("markers", markers);
 
     return (
-      <MyMapComponent markers={markers} />
+      <div>
+        <MyMapComponent markers={markers} />
+        <ButtonContainer _onTapCarBtn={this._onTapCarBtn} _onTapNoCarBtn={this._onTapCarBtn} />
+      </div>
     );
   }
 }

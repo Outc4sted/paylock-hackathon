@@ -39,6 +39,7 @@ const getHits = (res) => {
     return db.collection('nychits').find({}).limit(20).sort({loc: 1}).toArray().then(list => {
       // console.log(list)
       res.json(list);
+      client.close();
     });
     // console.log(list);
     // client.close();
