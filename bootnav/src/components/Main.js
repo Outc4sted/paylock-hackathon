@@ -39,7 +39,14 @@ export default class Main extends React.Component {
     fetch('/hits').then(res => {
       let records = res.json().then(records => {
         console.log("records", records);
-        self.state.hits = records;
+        let marker = records.shift()
+        this.setState({
+          hits: records,
+          activeMarker: marker
+        })
+        // self.state.hits = records;
+        // self.state.activeMarker = self.state.hits[0]
+        // self.state.hits.shift();
     });
 
     });
@@ -54,12 +61,27 @@ export default class Main extends React.Component {
   }
 
   _onTapCarBtn() {
-    this.setState({ existingCars: this.state.existingCars.push(this.state.activeMarker) })
+    let newMarker = this.state.hits.shift()
+    let hits = this.state.hits
+    // hits.shift()
+    this.setState({ 
+      existingCars: [...this.state.existingCars, this.state.activeMarker],
+      activeMarker: newMarker,
+      hits
+    })
   }
 
   _onTapNoCarBtn() {
     console.log(this.state.activeMarker, 'is not a hit')
     //do nothing...
+
+    let newMarker = this.state.hits[0]
+    let hits = this.state.hits
+    hits.shift()
+    this.setState({
+      activeMarker: newMarker,
+      hits
+    });
   }
 
   render() {
