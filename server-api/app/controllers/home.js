@@ -13,7 +13,7 @@ module.exports = router
 
 router.get('/hits', (req, res) => {
   //get hits from db
-  let hits = getHits(res)
+  const hits = getHits(res)
   console.log('route', hits)
   
 });

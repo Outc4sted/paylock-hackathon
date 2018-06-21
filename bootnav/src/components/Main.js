@@ -4,7 +4,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 
 const MyMapComponent = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDAac-LJE1r0KbID9ipA8_uUTCOSiUPVr0v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDAac-LJE1r0KbID9ipA8_uUTCOSiUPVr0",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
@@ -12,7 +12,7 @@ const MyMapComponent = compose(
   withScriptjs,
   withGoogleMap
 )(props =>
-  <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
+  <GoogleMap defaultZoom={8} defaultCenter={{ lat: 40.7128, lng: -74.0060 }}>
     {props.markers}
   </GoogleMap>
 )
@@ -30,7 +30,17 @@ export default class Main extends React.Component {
 
   componentDidMount() {
     let self = this;
-    fetch('/hits').then(res => self.state.hits = res);
+    fetch('/hits').then(res => {
+      let records = res.json().then(records => {
+        console.log("records", records);
+        self.state.hits = records;
+    });
+
+    });
+    // fetch('http://localhost:3001/hits').then(res => {
+    //   console.log("res", res);
+    //   self.state.hits = res
+    // });
   }
 
   handleMarkerClick(marker) {
@@ -41,6 +51,7 @@ export default class Main extends React.Component {
     const markers = this.state.hits.map((marker, idx) => (
       <Marker key={idx} position={{ lat: marker.Latitude, lng: marker.Longitude }} onClick={e => this.handleMarkerClick(marker)}> </Marker>
     ));
+    console.log("markers", markers);
 
     return (
       <MyMapComponent markers={markers} />

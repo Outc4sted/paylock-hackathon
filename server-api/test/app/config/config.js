@@ -13,7 +13,7 @@ describe('config', () => {
       app: {
         name: 'server-api'
       },
-      port: process.env.PORT || 3000,
+      port: process.env.PORT || 3001,
       db: 'sqlite://localhost/server-api-test',
       storage: config.storage
     });
